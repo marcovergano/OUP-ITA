@@ -28,7 +28,7 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  .container { max-width: 540px; margin: 0 auto; }
+  .container { max-width: 580px; margin: 0 auto; }
 
   /* ── SCREENS ───────────────────────────────────────── */
   .screen { display: none; }
@@ -40,24 +40,24 @@
     border-radius: 14px;
     padding: 36px 28px 32px;
     text-align: center;
-    margin-top: 10vh;
+    margin-top: 3vh;
   }
   .intro-card h1 {
     color: #fff;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 700;
     letter-spacing: -0.3px;
     margin-bottom: 6px;
   }
   .intro-card .subtitle {
     color: #9ba4b8;
-    font-size: 12px;
+    font-size: 13px;
     margin-bottom: 24px;
   }
   .intro-card .desc {
     color: #c8ccd6;
-    font-size: 13.5px;
-    line-height: 1.65;
+    font-size: 15px;
+    line-height: 1.7;
     text-align: left;
     margin-bottom: 28px;
   }
@@ -70,7 +70,7 @@
     border: none;
     padding: 14px 36px;
     border-radius: 99px;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 700;
     cursor: pointer;
     transition: transform 0.15s, box-shadow 0.15s;
@@ -83,9 +83,14 @@
 
   .intro-ref {
     color: #6b7080;
-    font-size: 10.5px;
+    font-size: 11.5px;
     margin-top: 20px;
-    line-height: 1.5;
+    line-height: 1.55;
+  }
+  .intro-ref strong {
+    color: #8a8fa0;
+    display: block;
+    margin-bottom: 4px;
   }
 
   /* ── HEADER (form/results) ─────────────────────────── */
@@ -98,11 +103,11 @@
     justify-content: space-between;
     align-items: center;
   }
-  .top-bar h2 { color: #fff; font-size: 14px; font-weight: 700; }
+  .top-bar h2 { color: #fff; font-size: 15.5px; font-weight: 700; }
   .top-bar .badge {
     background: rgba(255,255,255,0.12);
     color: #aab4c8;
-    font-size: 10.5px;
+    font-size: 11.5px;
     padding: 3px 10px;
     border-radius: 99px;
   }
@@ -132,7 +137,7 @@
     border-radius: 99px;
     transition: width 0.35s ease;
   }
-  .progress-text { font-size: 11px; color: var(--muted); white-space: nowrap; }
+  .progress-text { font-size: 12px; color: var(--muted); white-space: nowrap; }
 
   /* ── ITEM CARDS ────────────────────────────────────── */
   .item-card {
@@ -154,13 +159,13 @@
   }
   .item-num {
     font-weight: 800;
-    font-size: 13px;
+    font-size: 14px;
     color: var(--dark);
     min-width: 20px;
     padding-top: 1px;
   }
   .item-text {
-    font-size: 13.5px;
+    font-size: 15px;
     line-height: 1.55;
     color: var(--text);
   }
@@ -176,7 +181,7 @@
     border: 1.5px solid transparent;
     border-radius: 7px;
     padding: 8px 0;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
     color: #666;
     cursor: pointer;
@@ -202,7 +207,7 @@
     padding: 0 2px;
   }
   .likert-labels span {
-    font-size: 9.5px;
+    font-size: 10.5px;
     color: #aaa;
   }
 
@@ -212,7 +217,7 @@
     text-align: center;
   }
   .submit-hint {
-    font-size: 11.5px;
+    font-size: 12.5px;
     color: var(--muted);
     margin-bottom: 8px;
   }
@@ -222,7 +227,7 @@
     border: none;
     padding: 14px 32px;
     border-radius: 99px;
-    font-size: 14.5px;
+    font-size: 15.5px;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.15s;
@@ -253,9 +258,17 @@
     text-align: center;
     box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
-  .score-label { font-size: 11.5px; font-weight: 700; margin-bottom: 6px; }
-  .score-val { font-size: 28px; font-weight: 800; margin-bottom: 2px; }
-  .score-sub { font-size: 10px; color: var(--muted); margin-bottom: 10px; }
+  .score-label { font-size: 12.5px; font-weight: 700; margin-bottom: 6px; }
+  .score-val { font-size: 30px; font-weight: 800; margin-bottom: 2px; }
+  .score-sub { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
+
+  .score-box-total {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 16px 14px 14px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
 
   .gauge-track {
     background: #f0f0f0;
@@ -273,7 +286,7 @@
   .gauge-ticks {
     display: flex;
     justify-content: space-between;
-    font-size: 9px;
+    font-size: 10px;
     color: #bbb;
     padding: 0 1px;
   }
@@ -286,22 +299,22 @@
     box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
   .interpret-title {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 700;
     color: var(--dark);
     margin-bottom: 12px;
   }
   .int-block { margin-bottom: 12px; }
   .int-block:last-child { margin-bottom: 0; }
-  .int-head { font-size: 12.5px; font-weight: 700; margin-bottom: 3px; }
-  .int-body { font-size: 12.5px; line-height: 1.55; color: #555; }
+  .int-head { font-size: 13.5px; font-weight: 700; margin-bottom: 3px; }
+  .int-body { font-size: 13.5px; line-height: 1.55; color: #555; }
   .int-note {
     margin-top: 14px;
     padding-top: 12px;
     border-top: 1px solid var(--border);
-    font-size: 10.5px;
+    font-size: 11.5px;
     color: #999;
-    line-height: 1.5;
+    line-height: 1.55;
   }
 
   .restart-area {
@@ -314,7 +327,7 @@
     color: var(--muted);
     padding: 11px 28px;
     border-radius: 99px;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.15s;
@@ -322,6 +335,29 @@
   .btn-restart:hover {
     border-color: var(--dark);
     color: var(--dark);
+  }
+  .btn-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.2);
+    color: #aab4c8;
+    padding: 9px 20px;
+    border-radius: 99px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-home:hover {
+    border-color: rgba(255,255,255,0.45);
+    color: #fff;
+  }
+  .btn-home svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
   }
 </style>
 </head>
@@ -335,14 +371,22 @@
       <h1>Oxford Utilitarianism Scale</h1>
       <div class="subtitle">Versione italiana · 9 item · ~2 minuti</div>
       <div class="desc">
-        Questo questionario misura due dimensioni indipendenti del ragionamento morale utilitarista:<br><br>
-        <strong>Beneficienza Imparziale (IB)</strong> — la tendenza a massimizzare il benessere complessivo in modo imparziale.<br><br>
-        <strong>Danno Strumentale (IH)</strong> — la disponibilità ad accettare danni a individui innocenti come mezzo per un bene maggiore.<br><br>
+        L'<strong>Oxford Utilitarianism Scale (OUS)</strong> è uno strumento psicometrico sviluppato presso l'Uehiro Centre for Practical Ethics dell'Università di Oxford da Guy Kahane, Jim A.C. Everett, Brian D. Earp, Lucius Caviola, Nadira S. Faber, Molly J. Crockett e Julian Savulescu.<br><br>
+        Lo strumento nasce dalla constatazione che la ricerca precedente sulla psicologia morale utilitarista si era concentrata quasi esclusivamente sui dilemmi sacrificali di tipo trolley, catturando solo la dimensione negativa del ragionamento utilitarista — la disponibilità a causare un danno strumentale — e ignorando il nucleo positivo e altruistico della teoria: l'impegno a promuovere imparzialmente il benessere di tutti.<br><br>
+        La OUS misura due dimensioni indipendenti:<br><br>
+        <strong>Beneficienza Imparziale (IB)</strong> — 5 item che misurano la tendenza a massimizzare il benessere collettivo in modo imparziale, anche a costo di sacrifici personali significativi. Questa dimensione correla positivamente con empatia, identificazione con l'umanità nel suo complesso e preoccupazione per le generazioni future.<br><br>
+        <strong>Danno Strumentale (IH)</strong> — 4 item che misurano la disponibilità ad accettare danni a individui innocenti come mezzo per un bene maggiore. Questa dimensione presenta correlazioni inverse rispetto alla prima: è associata a minore empatia e a tratti di personalità più orientati alla razionalizzazione.<br><br>
+        Un risultato chiave della validazione è che queste due dimensioni risultano psicometricamente indipendenti nella popolazione generale — chi ottiene punteggi elevati in Beneficienza Imparziale non necessariamente li ottiene anche in Danno Strumentale, e viceversa. Tuttavia, nei filosofi morali professionisti che si identificano come utilitaristi, le due dimensioni sono strettamente associate.<br><br>
+        La OUS è stata validata in oltre 15 lingue nell'ambito della Psychological Science Accelerator (PSA 006) e la sua struttura fattoriale bidimensionale è stata confermata in contesti culturali diversi.<br><br>
         Per ogni affermazione, indica il tuo grado di accordo su una scala da 1 (fortemente in disaccordo) a 7 (fortemente d'accordo). Rispondi in modo spontaneo.
       </div>
       <button class="btn-start" id="btn-start">Inizia il questionario</button>
       <div class="intro-ref">
-        Kahane et al., <em>Psychological Review</em>, 2018;125(2):131–164.
+        <strong>Riferimenti</strong><br>
+        Kahane G, Everett JAC, Earp BD, Caviola L, Faber NS, Crockett MJ, Savulescu J. Beyond sacrificial harm: A two-dimensional model of utilitarian psychology. <em>Psychological Review</em>. 2018;125(2):131–164. doi:10.1037/rev0000093<br>
+        Everett JAC, Kahane G. Switching tracks? Towards a multidimensional model of utilitarian psychology. <em>Trends in Cognitive Sciences</em>. 2020;24(2):124–134.<br>
+        Bago B, et al. (PSA 006). Situational factors shape moral judgements in the trolley dilemma in Eastern, Southern and Western countries in a culturally diverse sample. <em>Nature Human Behaviour</em>. 2022;6:880–895.<br>
+        Structural validity across 15 languages: Oshiro B, et al. <em>Psychological Test Adaptation and Development</em>. 2024;5:175–191. doi:10.1027/2698-1866/a000061
       </div>
     </div>
   </div>
@@ -351,7 +395,10 @@
   <div id="screen-form" class="screen">
     <div class="top-bar">
       <h2>Oxford Utilitarianism Scale</h2>
-      <div class="badge">9 item</div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="badge">9 item</div>
+        <button class="btn-home" id="btn-home-form" title="Torna alla presentazione"><svg viewBox="0 0 20 20"><path d="M10 2.5L2 9h2.5v7h4v-4h3v4h4V9H18L10 2.5z"/></svg></button>
+      </div>
     </div>
 
     <div class="progress">
@@ -371,24 +418,35 @@
   <div id="screen-results" class="screen">
     <div class="top-bar">
       <h2>Il tuo punteggio</h2>
-      <div class="badge">OUS</div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="badge">OUS</div>
+        <button class="btn-home" id="btn-home-results" title="Torna alla presentazione"><svg viewBox="0 0 20 20"><path d="M10 2.5L2 9h2.5v7h4v-4h3v4h4V9H18L10 2.5z"/></svg></button>
+      </div>
     </div>
 
     <div class="scores-row">
       <div class="score-box" style="border:1px solid rgba(26,107,138,0.2)">
         <div class="score-label" style="color:var(--ib)">Beneficienza Imparziale</div>
         <div class="score-val" style="color:var(--ib)" id="r-ib">—</div>
-        <div class="score-sub">item 1, 3, 5, 7, 9 · su 7</div>
+        <div class="score-sub">item 1, 3, 5, 7, 9 · su 100</div>
         <div class="gauge-track"><div class="gauge-fill" id="g-ib" style="background:var(--ib)"></div></div>
-        <div class="gauge-ticks"><span>1</span><span>4</span><span>7</span></div>
+        <div class="gauge-ticks"><span>0</span><span>50</span><span>100</span></div>
       </div>
       <div class="score-box" style="border:1px solid rgba(194,122,0,0.2)">
         <div class="score-label" style="color:var(--ih)">Danno Strumentale</div>
         <div class="score-val" style="color:var(--ih)" id="r-ih">—</div>
-        <div class="score-sub">item 2, 4, 6, 8 · su 7</div>
+        <div class="score-sub">item 2, 4, 6, 8 · su 100</div>
         <div class="gauge-track"><div class="gauge-fill" id="g-ih" style="background:var(--ih)"></div></div>
-        <div class="gauge-ticks"><span>1</span><span>4</span><span>7</span></div>
+        <div class="gauge-ticks"><span>0</span><span>50</span><span>100</span></div>
       </div>
+    </div>
+
+    <div class="score-box score-box-total" style="border:1px solid rgba(26,26,46,0.15); margin-bottom:14px;">
+      <div class="score-label" style="color:var(--dark)">Punteggio Complessivo OUS</div>
+      <div class="score-val" style="color:var(--dark)" id="r-tot">—</div>
+      <div class="score-sub">media dei 9 item · su 100</div>
+      <div class="gauge-track"><div class="gauge-fill" id="g-tot" style="background:var(--dark)"></div></div>
+      <div class="gauge-ticks"><span>0</span><span>50</span><span>100</span></div>
     </div>
 
     <div class="interpret-card">
@@ -434,6 +492,8 @@
   var btnStart      = document.getElementById('btn-start');
   var btnCalc       = document.getElementById('btn-calc');
   var btnRestart    = document.getElementById('btn-restart');
+  var btnHomeForm   = document.getElementById('btn-home-form');
+  var btnHomeResults = document.getElementById('btn-home-results');
   var itemsEl       = document.getElementById('items');
   var pbar          = document.getElementById('pbar');
   var plabel        = document.getElementById('plabel');
@@ -450,6 +510,14 @@
 
   btnStart.addEventListener('click', function () {
     showScreen(screenForm);
+  });
+
+  btnHomeForm.addEventListener('click', function () {
+    showScreen(screenIntro);
+  });
+
+  btnHomeResults.addEventListener('click', function () {
+    showScreen(screenIntro);
   });
 
   btnRestart.addEventListener('click', function () {
@@ -547,32 +615,43 @@
     return sum / ids.length;
   }
 
+  function toScale100(rawMean) {
+    return (rawMean - 1) / 6 * 100;
+  }
+
   function interpText(val, isSub_ib) {
     var head, body, color;
     if (isSub_ib) {
       color = 'var(--ib)';
-      if (val >= 5.5)      { head = 'Alta Beneficienza Imparziale';    body = 'Attribuisci grande peso all\'obbligo morale di massimizzare il benessere collettivo, anche a costo di sacrifici personali significativi.'; }
-      else if (val >= 3.5) { head = 'Beneficienza Imparziale moderata'; body = 'Riconosci un certo obbligo verso il benessere altrui, bilanciandolo con considerazioni personali e parziali.'; }
+      if (val >= 75)       { head = 'Alta Beneficienza Imparziale';    body = 'Attribuisci grande peso all\'obbligo morale di massimizzare il benessere collettivo, anche a costo di sacrifici personali significativi.'; }
+      else if (val >= 42)  { head = 'Beneficienza Imparziale moderata'; body = 'Riconosci un certo obbligo verso il benessere altrui, bilanciandolo con considerazioni personali e parziali.'; }
       else                 { head = 'Bassa Beneficienza Imparziale';   body = 'Tendi a non considerare obbligatorio il sacrificio personale per massimizzare il benessere complessivo.'; }
     } else {
       color = 'var(--ih)';
-      if (val >= 5.5)      { head = 'Alto Danno Strumentale';    body = 'Sei più disposto ad accettare che causare danno a qualcuno possa essere giustificato se massimizza il benessere collettivo.'; }
-      else if (val >= 3.5) { head = 'Danno Strumentale moderato'; body = 'Accetti in casi estremi che il danno a uno possa essere giustificato, ma con riserve significative.'; }
+      if (val >= 75)       { head = 'Alto Danno Strumentale';    body = 'Sei più disposto ad accettare che causare danno a qualcuno possa essere giustificato se massimizza il benessere collettivo.'; }
+      else if (val >= 42)  { head = 'Danno Strumentale moderato'; body = 'Accetti in casi estremi che il danno a uno possa essere giustificato, ma con riserve significative.'; }
       else                 { head = 'Basso Danno Strumentale';   body = 'Tendi a rifiutare l\'uso strumentale di persone innocenti anche a fronte di benefici collettivi.'; }
     }
     return '<div class="int-block"><div class="int-head" style="color:' + color + '">' + head + '</div><div class="int-body">' + body + '</div></div>';
   }
 
   function calcResults() {
-    var ib = mean([1,3,5,7,9]);
-    var ih = mean([2,4,6,8]);
+    var ibRaw = mean([1,3,5,7,9]);
+    var ihRaw = mean([2,4,6,8]);
+    var totRaw = mean([1,2,3,4,5,6,7,8,9]);
 
-    document.getElementById('r-ib').textContent = ib.toFixed(2);
-    document.getElementById('r-ih').textContent = ih.toFixed(2);
+    var ib = toScale100(ibRaw);
+    var ih = toScale100(ihRaw);
+    var tot = toScale100(totRaw);
+
+    document.getElementById('r-ib').textContent = Math.round(ib);
+    document.getElementById('r-ih').textContent = Math.round(ih);
+    document.getElementById('r-tot').textContent = Math.round(tot);
 
     setTimeout(function () {
-      document.getElementById('g-ib').style.width = ((ib - 1) / 6 * 100) + '%';
-      document.getElementById('g-ih').style.width = ((ih - 1) / 6 * 100) + '%';
+      document.getElementById('g-ib').style.width = ib + '%';
+      document.getElementById('g-ih').style.width = ih + '%';
+      document.getElementById('g-tot').style.width = tot + '%';
     }, 60);
 
     document.getElementById('interp').innerHTML = interpText(ib, true) + interpText(ih, false);
