@@ -6,322 +6,583 @@
 <title>Oxford Utilitarianism Scale</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f9f9fb; min-height: 100vh; padding: 24px 16px 40px; }
-  .wrap { max-width: 560px; margin: 0 auto; }
 
-  .header { background: #1a1a2e; border-radius: 12px; padding: 18px 24px; margin-bottom: 20px; }
-  .header h1 { color: #fff; font-size: 17px; font-weight: 700; }
-  .header p  { color: #aab4c8; font-size: 11px; margin-top: 3px; }
+  :root {
+    --bg: #f9f9fb;
+    --surface: #ffffff;
+    --dark: #1a1a2e;
+    --ib: #1a6b8a;
+    --ih: #c27a00;
+    --text: #2c2c2c;
+    --muted: #777;
+    --border: #ececec;
+    --radius: 12px;
+  }
 
-  .progress-wrap { background: #fff; border-radius: 10px; padding: 10px 14px; margin-bottom: 16px; display: flex; align-items: center; gap: 12px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
-  .progress-bar  { flex: 1; background: #f0f0f0; border-radius: 99px; height: 6px; overflow: hidden; }
-  .progress-fill { height: 100%; background: #1a6b8a; border-radius: 99px; transition: width .3s; }
-  .progress-label { font-size: 11px; color: #888; white-space: nowrap; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100dvh;
+    padding: 20px 16px 48px;
+    -webkit-font-smoothing: antialiased;
+  }
 
-  .card { background: #fff; border-radius: 12px; padding: 15px 16px; margin-bottom: 10px; box-shadow: 0 1px 4px rgba(0,0,0,.06); border: 1px solid #ececec; transition: border .2s; }
-  .card.answered-ib { border-color: rgba(26,107,138,.25); }
-  .card.answered-ih { border-color: rgba(194,122,0,.25); }
+  .container { max-width: 540px; margin: 0 auto; }
 
-  .q-head { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 10px; }
-  .q-num  { font-weight: 800; color: #1a1a2e; font-size: 13px; min-width: 18px; }
-  .q-body { font-size: 13px; color: #222; line-height: 1.55; }
-  .badge  { display: inline-block; margin-left: 6px; font-size: 8.5px; font-weight: 700; padding: 2px 6px; border-radius: 99px; vertical-align: middle; white-space: nowrap; }
-  .badge-ib { background: #e8f4f8; color: #1a6b8a; border: 1px solid rgba(26,107,138,.25); }
-  .badge-ih { background: #fef3e2; color: #c27a00; border: 1px solid rgba(194,122,0,.25); }
+  /* ── SCREENS ───────────────────────────────────────── */
+  .screen { display: none; }
+  .screen.active { display: block; }
 
-  .scale { display: flex; gap: 4px; }
-  .scale button { flex: 1; padding: 9px 0; border-radius: 8px; border: 1px solid #ddd; background: #fafafa; color: #666; font-size: 13px; cursor: pointer; transition: all .15s; font-family: inherit; }
-  .scale button.sel-ib { border: 2px solid #1a6b8a; background: #1a6b8a; color: #fff; font-weight: 700; }
-  .scale button.sel-ih { border: 2px solid #c27a00; background: #c27a00; color: #fff; font-weight: 700; }
-  .scale-labels { display: flex; justify-content: space-between; margin-top: 3px; font-size: 9px; color: #bbb; }
+  /* ── INTRO ─────────────────────────────────────────── */
+  .intro-card {
+    background: var(--dark);
+    border-radius: 14px;
+    padding: 36px 28px 32px;
+    text-align: center;
+    margin-top: 10vh;
+  }
+  .intro-card h1 {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin-bottom: 6px;
+  }
+  .intro-card .subtitle {
+    color: #9ba4b8;
+    font-size: 12px;
+    margin-bottom: 24px;
+  }
+  .intro-card .desc {
+    color: #c8ccd6;
+    font-size: 13.5px;
+    line-height: 1.65;
+    text-align: left;
+    margin-bottom: 28px;
+  }
+  .intro-card .desc strong { color: #e2e5ec; }
 
-  .submit-wrap { text-align: center; margin-top: 8px; }
-  .btn-submit { padding: 13px 44px; border-radius: 10px; border: none; background: #1a1a2e; color: #fff; font-weight: 700; font-size: 15px; cursor: pointer; box-shadow: 0 2px 10px rgba(26,26,46,.3); transition: all .2s; font-family: inherit; }
-  .btn-submit:disabled { background: #ccc; box-shadow: none; cursor: not-allowed; }
-  .btn-hint { font-size: 11px; color: #aaa; margin-bottom: 12px; }
+  .btn-start {
+    display: inline-block;
+    background: #fff;
+    color: var(--dark);
+    border: none;
+    padding: 14px 36px;
+    border-radius: 99px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .btn-start:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.25);
+  }
+  .btn-start:active { transform: translateY(0); }
 
-  /* Intro */
-  .intro { background: #fff; border-radius: 12px; padding: 20px 20px 16px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.06); border: 1px solid #ececec; }
-  .intro h2 { font-size: 13px; font-weight: 700; color: #1a1a2e; margin-bottom: 8px; }
-  .intro p  { font-size: 12px; color: #444; line-height: 1.65; margin-bottom: 8px; }
-  .intro p:last-child { margin-bottom: 0; }
-  .subscale-row { display: flex; gap: 8px; margin: 10px 0; }
-  .subscale-pill { flex: 1; border-radius: 8px; padding: 8px 10px; font-size: 11px; line-height: 1.5; }
-  .subscale-pill strong { display: block; font-size: 11.5px; margin-bottom: 2px; }
-  .pill-ib { background: #e8f4f8; color: #1a6b8a; border: 1px solid rgba(26,107,138,.2); }
-  .pill-ih { background: #fef3e2; color: #c27a00; border: 1px solid rgba(194,122,0,.2); }
-  .refs { margin-top: 12px; padding-top: 10px; border-top: 1px solid #f0f0f0; }
-  .refs p { font-size: 10px; color: #888; line-height: 1.55; margin-bottom: 4px; font-style: italic; }
-  .refs p:last-child { margin-bottom: 0; }
-  .btn-start { display: block; width: 100%; padding: 13px; border-radius: 10px; border: none; background: #1a1a2e; color: #fff; font-weight: 700; font-size: 15px; cursor: pointer; box-shadow: 0 2px 10px rgba(26,26,46,.25); font-family: inherit; margin-top: 16px; transition: opacity .2s; }
-  .btn-start:hover { opacity: .88; }
-  #test-view { display: none; }
+  .intro-ref {
+    color: #6b7080;
+    font-size: 10.5px;
+    margin-top: 20px;
+    line-height: 1.5;
+  }
 
-  /* Results */
-  #results { display: none; }
-  .scores-row { display: flex; gap: 12px; margin-bottom: 4px; }
-  .score-card { flex: 1; background: #fff; border-radius: 14px; padding: 18px 16px; box-shadow: 0 2px 10px rgba(0,0,0,.08); }
-  .score-card .sc-label { font-size: 11px; font-weight: 700; margin-bottom: 2px; }
-  .score-card .sc-value { font-size: 38px; font-weight: 800; line-height: 1; }
-  .score-card .sc-sub   { font-size: 10px; color: #aaa; margin-bottom: 10px; }
-  .gauge-bg   { background: #f0f0f0; border-radius: 99px; height: 8px; overflow: hidden; }
-  .gauge-fill { height: 100%; border-radius: 99px; transition: width 1s ease; }
-  .gauge-ticks { display: flex; justify-content: space-between; font-size: 9px; color: #bbb; margin-top: 3px; }
+  /* ── HEADER (form/results) ─────────────────────────── */
+  .top-bar {
+    background: var(--dark);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .top-bar h2 { color: #fff; font-size: 14px; font-weight: 700; }
+  .top-bar .badge {
+    background: rgba(255,255,255,0.12);
+    color: #aab4c8;
+    font-size: 10.5px;
+    padding: 3px 10px;
+    border-radius: 99px;
+  }
 
-  .interpret { background: #f7f7fa; border-radius: 12px; padding: 14px 16px; margin-top: 16px; }
-  .interpret .int-title { font-size: 11px; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px; }
-  .int-item { margin-bottom: 10px; }
-  .int-item:last-child { margin-bottom: 0; }
-  .int-item .int-head { font-size: 12px; font-weight: 700; }
-  .int-item .int-body { font-size: 11px; color: #555; line-height: 1.5; margin-top: 2px; }
-  .int-note { font-size: 9px; color: #bbb; margin-top: 12px; border-top: 1px solid #e8e8e8; padding-top: 8px; }
+  /* ── PROGRESS ──────────────────────────────────────── */
+  .progress {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .progress-track {
+    flex: 1;
+    background: #f0f0f0;
+    border-radius: 99px;
+    height: 5px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--ib);
+    border-radius: 99px;
+    transition: width 0.35s ease;
+  }
+  .progress-text { font-size: 11px; color: var(--muted); white-space: nowrap; }
 
-  .restart-wrap { text-align: center; margin-top: 20px; }
-  .restart-hint { font-size: 11px; color: #aaa; margin-bottom: 12px; }
-  .btn-restart { padding: 9px 28px; border-radius: 9px; border: 1px solid #ddd; background: #fff; cursor: pointer; font-size: 13px; color: #1a1a2e; font-weight: 600; font-family: inherit; }
+  /* ── ITEM CARDS ────────────────────────────────────── */
+  .item-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px 12px;
+    margin-bottom: 10px;
+    transition: border-color 0.25s;
+  }
+  .item-card.done-ib { border-color: rgba(26,107,138,0.25); }
+  .item-card.done-ih { border-color: rgba(194,122,0,0.25); }
+
+  .item-head {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+  .item-num {
+    font-weight: 800;
+    font-size: 13px;
+    color: var(--dark);
+    min-width: 20px;
+    padding-top: 1px;
+  }
+  .item-text {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--text);
+  }
+
+  .likert {
+    display: flex;
+    gap: 4px;
+    margin-top: 4px;
+  }
+  .likert-btn {
+    flex: 1;
+    background: #f0f0f4;
+    border: 1.5px solid transparent;
+    border-radius: 7px;
+    padding: 8px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+  }
+  .likert-btn:hover { background: #e6e6ea; }
+  .likert-btn.sel-ib {
+    background: var(--ib);
+    color: #fff;
+    border-color: var(--ib);
+  }
+  .likert-btn.sel-ih {
+    background: var(--ih);
+    color: #fff;
+    border-color: var(--ih);
+  }
+
+  .likert-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+    padding: 0 2px;
+  }
+  .likert-labels span {
+    font-size: 9.5px;
+    color: #aaa;
+  }
+
+  /* ── SUBMIT ────────────────────────────────────────── */
+  .submit-area {
+    margin-top: 18px;
+    text-align: center;
+  }
+  .submit-hint {
+    font-size: 11.5px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .btn-submit {
+    background: var(--dark);
+    color: #fff;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 99px;
+    font-size: 14.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+  .btn-submit.ready {
+    opacity: 1;
+    pointer-events: auto;
+    box-shadow: 0 3px 14px rgba(26,26,46,0.3);
+  }
+  .btn-submit.ready:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 20px rgba(26,26,46,0.35);
+  }
+
+  /* ── RESULTS ───────────────────────────────────────── */
+  .scores-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .score-box {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 16px 14px 14px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .score-label { font-size: 11.5px; font-weight: 700; margin-bottom: 6px; }
+  .score-val { font-size: 28px; font-weight: 800; margin-bottom: 2px; }
+  .score-sub { font-size: 10px; color: var(--muted); margin-bottom: 10px; }
+
+  .gauge-track {
+    background: #f0f0f0;
+    border-radius: 99px;
+    height: 6px;
+    overflow: hidden;
+    margin-bottom: 4px;
+  }
+  .gauge-fill {
+    height: 100%;
+    border-radius: 99px;
+    width: 0%;
+    transition: width 0.6s ease;
+  }
+  .gauge-ticks {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    color: #bbb;
+    padding: 0 1px;
+  }
+
+  .interpret-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin-bottom: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .interpret-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 12px;
+  }
+  .int-block { margin-bottom: 12px; }
+  .int-block:last-child { margin-bottom: 0; }
+  .int-head { font-size: 12.5px; font-weight: 700; margin-bottom: 3px; }
+  .int-body { font-size: 12.5px; line-height: 1.55; color: #555; }
+  .int-note {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 10.5px;
+    color: #999;
+    line-height: 1.5;
+  }
+
+  .restart-area {
+    text-align: center;
+    margin-top: 20px;
+  }
+  .btn-restart {
+    background: transparent;
+    border: 2px solid var(--border);
+    color: var(--muted);
+    padding: 11px 28px;
+    border-radius: 99px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-restart:hover {
+    border-color: var(--dark);
+    color: var(--dark);
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <!-- INTRO -->
-  <div id="intro-view">
-    <div class="header">
+<div class="container">
+
+  <!-- ═══════ SCREEN 1: INTRO ═══════ -->
+  <div id="screen-intro" class="screen active">
+    <div class="intro-card">
       <h1>Oxford Utilitarianism Scale</h1>
-      <p>Strumento di autovalutazione &middot; Anonimo &middot; ~3 minuti</p>
-    </div>
-    <div class="intro">
-      <h2>Che cos'è l'Oxford Utilitarianism Scale?</h2>
-      <p>
-        L'Oxford Utilitarianism Scale (OUS) è uno strumento psicometrico sviluppato da Kahane e colleghi
-        per misurare le tendenze utilitaristiche nel ragionamento morale. A differenza degli approcci
-        precedenti — che riducevano l'utilitarismo al solo schema sacrificale del trolley problem —
-        l'OUS propone un modello bidimensionale, identificando due componenti distinte e
-        tendenzialmente indipendenti:
-      </p>
-      <div class="subscale-row">
-        <div class="subscale-pill pill-ib">
-          <strong>Beneficienza Imparziale (IB)</strong>
-          Item 1, 3, 5, 7, 9<br>
-          Propensione a promuovere il benessere collettivo in modo imparziale, senza privilegiare chi ci è vicino.
-        </div>
-        <div class="subscale-pill pill-ih">
-          <strong>Danno Strumentale (IH)</strong>
-          Item 2, 4, 6, 8<br>
-          Disponibilità a causare danno a individui innocenti come mezzo per massimizzare il benessere aggregato.
-        </div>
+      <div class="subtitle">Versione italiana · 9 item · ~2 minuti</div>
+      <div class="desc">
+        Questo questionario misura due dimensioni indipendenti del ragionamento morale utilitarista:<br><br>
+        <strong>Beneficienza Imparziale (IB)</strong> — la tendenza a massimizzare il benessere complessivo in modo imparziale.<br><br>
+        <strong>Danno Strumentale (IH)</strong> — la disponibilità ad accettare danni a individui innocenti come mezzo per un bene maggiore.<br><br>
+        Per ogni affermazione, indica il tuo grado di accordo su una scala da 1 (fortemente in disaccordo) a 7 (fortemente d'accordo). Rispondi in modo spontaneo.
       </div>
-      <p>
-        Le due sottoscale non misurano un unico costrutto: un punteggio elevato su IB non implica
-        necessariamente un punteggio elevato su IH. Questa dissociazione ha rilevanza sia teorica —
-        nel dibattito filosofico sull'utilitarismo — sia pratica, ad esempio nello studio del
-        ragionamento morale in contesti clinici e bioetici.
-      </p>
-      <p>
-        La scala è composta da 9 item con risposta su scala Likert a 7 punti
-        (1 = Fortemente in disaccordo, 7 = Fortemente d'accordo).
-        Al termine riceverai il tuo punteggio personale per ciascuna sottoscala. Nessun dato viene
-        trasmesso o registrato.
-      </p>
-      <div class="refs">
-        <p>
-          1. Kahane G, Everett JA, Earp BD, Caviola L, Faber NS, Crockett MJ, Savulescu J.
-          Beyond sacrificial harm: A two-dimensional model of utilitarian psychology.
-          <em>Psychological Review</em>. 2018;125(2):131–164.
-        </p>
-        <p>
-          2. Kahane G, Everett JA, Earp BD, Caviola L, Faber NS, Crockett MJ, Savulescu J.
-          Beyond sacrificial harm: A two-dimensional model of utilitarian psychology [Correction].
-          <em>Psychological Review</em>. 2019;126(6):979.
-        </p>
+      <button class="btn-start" id="btn-start">Inizia il questionario</button>
+      <div class="intro-ref">
+        Kahane et al., <em>Psychological Review</em>, 2018;125(2):131–164.
       </div>
-      <button class="btn-start" onclick="startTest()">Inizia il questionario →</button>
     </div>
   </div>
 
-  <!-- FORM -->
-  <div id="test-view">
-  <div id="form-view">
-    <div class="header">
-      <h1>Oxford Utilitarianism Scale</h1>
-      <p>Scala di Likert 1–7 &middot; Punteggio personale &middot; Anonimo</p>
+  <!-- ═══════ SCREEN 2: FORM ═══════ -->
+  <div id="screen-form" class="screen">
+    <div class="top-bar">
+      <h2>Oxford Utilitarianism Scale</h2>
+      <div class="badge">9 item</div>
     </div>
 
-    <div class="progress-wrap">
-      <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
-      <div class="progress-label" id="prog-label">0 / 9</div>
+    <div class="progress">
+      <div class="progress-track"><div class="progress-fill" id="pbar"></div></div>
+      <div class="progress-text" id="plabel">0 / 9</div>
     </div>
 
-    <div id="items-container"></div>
+    <div id="items"></div>
 
-    <div class="submit-wrap">
-      <div class="btn-hint" id="btn-hint">Rispondi a tutti gli item (0/9)</div>
-      <button class="btn-submit" id="btn-submit" disabled onclick="showResults()">Calcola il mio punteggio →</button>
+    <div class="submit-area">
+      <div class="submit-hint" id="shint">Rispondi a tutti gli item (0/9)</div>
+      <button class="btn-submit" id="btn-calc">Calcola il mio punteggio →</button>
     </div>
   </div>
-  </div><!-- /test-view -->
 
-  <!-- RESULTS -->
-  <div id="results">
-    <div class="header">
-      <h1>Oxford Utilitarianism Scale</h1>
-      <p>Il tuo punteggio personale</p>
+  <!-- ═══════ SCREEN 3: RESULTS ═══════ -->
+  <div id="screen-results" class="screen">
+    <div class="top-bar">
+      <h2>Il tuo punteggio</h2>
+      <div class="badge">OUS</div>
     </div>
 
     <div class="scores-row">
-      <div class="score-card" style="border:1px solid rgba(26,107,138,.2)">
-        <div class="sc-label" style="color:#1a6b8a">Beneficienza Imparziale</div>
-        <div class="sc-value" style="color:#1a6b8a" id="ib-val">—</div>
-        <div class="sc-sub">item 1,3,5,7,9 &middot; su 7</div>
-        <div class="gauge-bg"><div class="gauge-fill" id="ib-gauge" style="background:#1a6b8a;width:0%"></div></div>
+      <div class="score-box" style="border:1px solid rgba(26,107,138,0.2)">
+        <div class="score-label" style="color:var(--ib)">Beneficienza Imparziale</div>
+        <div class="score-val" style="color:var(--ib)" id="r-ib">—</div>
+        <div class="score-sub">item 1, 3, 5, 7, 9 · su 7</div>
+        <div class="gauge-track"><div class="gauge-fill" id="g-ib" style="background:var(--ib)"></div></div>
         <div class="gauge-ticks"><span>1</span><span>4</span><span>7</span></div>
       </div>
-      <div class="score-card" style="border:1px solid rgba(194,122,0,.2)">
-        <div class="sc-label" style="color:#c27a00">Danno Strumentale</div>
-        <div class="sc-value" style="color:#c27a00" id="ih-val">—</div>
-        <div class="sc-sub">item 2,4,6,8 &middot; su 7</div>
-        <div class="gauge-bg"><div class="gauge-fill" id="ih-gauge" style="background:#c27a00;width:0%"></div></div>
+      <div class="score-box" style="border:1px solid rgba(194,122,0,0.2)">
+        <div class="score-label" style="color:var(--ih)">Danno Strumentale</div>
+        <div class="score-val" style="color:var(--ih)" id="r-ih">—</div>
+        <div class="score-sub">item 2, 4, 6, 8 · su 7</div>
+        <div class="gauge-track"><div class="gauge-fill" id="g-ih" style="background:var(--ih)"></div></div>
         <div class="gauge-ticks"><span>1</span><span>4</span><span>7</span></div>
       </div>
     </div>
 
-    <div class="interpret">
-      <div class="int-title">Interpretazione</div>
-      <div id="interpret-body"></div>
+    <div class="interpret-card">
+      <div class="interpret-title">Interpretazione</div>
+      <div id="interp"></div>
       <div class="int-note">
-        I punteggi riflettono tendenze nel ragionamento morale, non giudizi di valore. Le due sottoscale sono indipendenti.<br>
+        I punteggi riflettono tendenze nel ragionamento morale, non giudizi di valore.
+        Le due sottoscale sono indipendenti.<br>
         Kahane et al., <em>Psychological Review</em>, 2018;125(2):131–164.
       </div>
     </div>
 
-    <div class="restart-wrap">
-      <div class="restart-hint">Vuoi ricompilare il questionario?</div>
-      <button class="btn-restart" onclick="restart()">Ricomincia</button>
+    <div class="restart-area">
+      <button class="btn-restart" id="btn-restart">Ricomincia</button>
     </div>
   </div>
 
 </div>
 
 <script>
-const ITEMS = [
-  { id:1, sub:"IB", text:"Se l'unico modo per salvare la vita di un'altra persona durante un'emergenza è sacrificare la propria gamba, allora si è moralmente obbligati a fare questo sacrificio." },
-  { id:2, sub:"IH", text:"È moralmente giusto arrecare danno a una persona innocente se farlo è il mezzo necessario per aiutare altre persone innocenti." },
-  { id:3, sub:"IB", text:"Da un punto di vista morale, dovremmo sentirci obbligati a donare uno dei nostri reni a una persona con insufficienza renale, poiché non ne abbiamo bisogno di due per sopravvivere." },
-  { id:4, sub:"IH", text:"Se l'unico modo per garantire il benessere generale della popolazione è ricorrere all'oppressione politica per un breve periodo, allora essa dovrebbe essere utilizzata." },
-  { id:5, sub:"IB", text:"Dal punto di vista morale, le persone dovrebbero preoccuparsi del benessere di tutti gli esseri umani in egual misura, senza privilegiare chi è loro vicino fisicamente o emotivamente." },
-  { id:6, sub:"IH", text:"È lecito torturare una persona innocente se ciò fosse necessario per impedire l'esplosione di una bomba che ucciderebbe centinaia di persone." },
-  { id:7, sub:"IB", text:"Non aiutare qualcuno è altrettanto sbagliato quanto fargli del male direttamente." },
-  { id:8, sub:"IH", text:"A volte è moralmente necessario che persone innocenti muoiano come danno collaterale, se in questo modo si salva un numero maggiore di persone." },
-  { id:9, sub:"IB", text:"È moralmente sbagliato tenere denaro di cui non si ha realmente bisogno se lo si può donare a cause che offrono aiuto concreto a chi ne trae grande beneficio." },
-];
+(function () {
+  'use strict';
 
-const votes = {};
+  /* ── DATA ────────────────────────────────────────── */
+  var ITEMS = [
+    { id:1, sub:'IB', text:"Se l'unico modo per salvare la vita di un'altra persona durante un'emergenza è sacrificare la propria gamba, allora si è moralmente obbligati a fare questo sacrificio." },
+    { id:2, sub:'IH', text:"È moralmente giusto arrecare danno a una persona innocente se farlo è il mezzo necessario per aiutare altre persone innocenti." },
+    { id:3, sub:'IB', text:"Da un punto di vista morale, dovremmo sentirci obbligati a donare uno dei nostri reni a una persona con insufficienza renale, poiché non ne abbiamo bisogno di due per sopravvivere." },
+    { id:4, sub:'IH', text:"Se l'unico modo per garantire il benessere generale della popolazione è ricorrere all'oppressione politica per un breve periodo, allora essa dovrebbe essere utilizzata." },
+    { id:5, sub:'IB', text:"Se l'unico modo per salvare la vita di un'altra persona durante un'emergenza è donare il proprio denaro, allora si ha l'obbligo morale di farlo." },
+    { id:6, sub:'IH', text:"È moralmente giusto torturare una persona innocente se ciò consentirebbe di scoprire la posizione di una bomba nucleare nascosta in una grande città." },
+    { id:7, sub:'IB', text:"Da un punto di vista morale, il denaro speso per un'opera d'arte di valore potrebbe essere meglio investito in un ente di beneficenza." },
+    { id:8, sub:'IH', text:"Se il modo migliore per sconfiggere i terroristi è attaccare aree civili, allora questo è giustificato." },
+    { id:9, sub:'IB', text:"Da un punto di vista morale, si ha l'obbligo di donare una percentuale significativa del proprio reddito per aiutare i più poveri del mondo." }
+  ];
 
-function startTest() {
-  document.getElementById('intro-view').style.display = 'none';
-  document.getElementById('test-view').style.display = 'block';
-  window.scrollTo(0,0);
-}
+  var votes = {};
 
+  /* ── DOM REFS ────────────────────────────────────── */
+  var screenIntro   = document.getElementById('screen-intro');
+  var screenForm    = document.getElementById('screen-form');
+  var screenResults = document.getElementById('screen-results');
+  var btnStart      = document.getElementById('btn-start');
+  var btnCalc       = document.getElementById('btn-calc');
+  var btnRestart    = document.getElementById('btn-restart');
+  var itemsEl       = document.getElementById('items');
+  var pbar          = document.getElementById('pbar');
+  var plabel        = document.getElementById('plabel');
+  var shint         = document.getElementById('shint');
 
-  const c = document.getElementById('items-container');
-  c.innerHTML = '';
-  ITEMS.forEach(item => {
-    const isIB = item.sub === 'IB';
-    const div = document.createElement('div');
-    div.className = 'card';
-    div.id = 'card-' + item.id;
-    div.innerHTML = `
-      <div class="q-head">
-        <span class="q-num">${item.id}.</span>
-        <span class="q-body">${item.text}
-          <span class="badge ${isIB ? 'badge-ib' : 'badge-ih'}">${isIB ? 'Benef. Imparziale' : 'Danno Strumentale'}</span>
-        </span>
-      </div>
-      <div class="scale" id="scale-${item.id}">
-        ${[1,2,3,4,5,6,7].map(v => `<button onclick="vote(${item.id},${v})" id="btn-${item.id}-${v}">${v}</button>`).join('')}
-      </div>
-      <div class="scale-labels"><span>Fortemente in disaccordo</span><span>Fortemente d'accordo</span></div>
-    `;
-    c.appendChild(div);
+  /* ── NAVIGATION ──────────────────────────────────── */
+  function showScreen(el) {
+    screenIntro.classList.remove('active');
+    screenForm.classList.remove('active');
+    screenResults.classList.remove('active');
+    el.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  btnStart.addEventListener('click', function () {
+    showScreen(screenForm);
   });
-}
 
-function vote(itemId, val) {
-  const item = ITEMS.find(i => i.id === itemId);
-  const isIB = item.sub === 'IB';
-  votes[itemId] = val;
-  // Update buttons
-  for (let v = 1; v <= 7; v++) {
-    const b = document.getElementById(`btn-${itemId}-${v}`);
-    b.className = v === val ? (isIB ? 'sel-ib' : 'sel-ih') : '';
+  btnRestart.addEventListener('click', function () {
+    votes = {};
+    buildItems();
+    updateProgress();
+    showScreen(screenForm);
+  });
+
+  btnCalc.addEventListener('click', function () {
+    if (Object.keys(votes).length < 9) return;
+    calcResults();
+    showScreen(screenResults);
+  });
+
+  /* ── BUILD ITEMS ─────────────────────────────────── */
+  function buildItems() {
+    itemsEl.innerHTML = '';
+    ITEMS.forEach(function (item) {
+      var card = document.createElement('div');
+      card.className = 'item-card';
+      card.id = 'card-' + item.id;
+
+      var head = document.createElement('div');
+      head.className = 'item-head';
+      head.innerHTML = '<div class="item-num">' + item.id + '.</div>' +
+                        '<div class="item-text">' + item.text + '</div>';
+      card.appendChild(head);
+
+      var likert = document.createElement('div');
+      likert.className = 'likert';
+      for (var v = 1; v <= 7; v++) {
+        (function (val) {
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'likert-btn';
+          btn.textContent = val;
+          btn.setAttribute('data-item', item.id);
+          btn.setAttribute('data-val', val);
+          btn.addEventListener('click', function () {
+            selectAnswer(item.id, val, item.sub);
+          });
+          likert.appendChild(btn);
+        })(v);
+      }
+      card.appendChild(likert);
+
+      var labels = document.createElement('div');
+      labels.className = 'likert-labels';
+      labels.innerHTML = '<span>Fortemente in disaccordo</span><span>Fortemente d\'accordo</span>';
+      card.appendChild(labels);
+
+      itemsEl.appendChild(card);
+    });
   }
-  // Update card border
-  const card = document.getElementById('card-' + itemId);
-  card.className = 'card ' + (isIB ? 'answered-ib' : 'answered-ih');
-  // Update progress
-  const n = Object.keys(votes).length;
-  document.getElementById('prog-fill').style.width = (n/9*100) + '%';
-  document.getElementById('prog-label').textContent = n + ' / 9';
-  const btn = document.getElementById('btn-submit');
-  if (n === 9) {
-    btn.disabled = false;
-    document.getElementById('btn-hint').textContent = '';
-  } else {
-    btn.disabled = true;
-    document.getElementById('btn-hint').textContent = `Rispondi a tutti gli item (${n}/9)`;
+
+  /* ── SELECT ANSWER ───────────────────────────────── */
+  function selectAnswer(itemId, val, sub) {
+    votes[itemId] = val;
+
+    var card = document.getElementById('card-' + itemId);
+    card.className = 'item-card done-' + sub.toLowerCase();
+
+    var btns = card.querySelectorAll('.likert-btn');
+    var selClass = sub === 'IB' ? 'sel-ib' : 'sel-ih';
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].classList.remove('sel-ib', 'sel-ih');
+      if (parseInt(btns[i].getAttribute('data-val')) === val) {
+        btns[i].classList.add(selClass);
+      }
+    }
+
+    updateProgress();
   }
-}
 
-function mean(ids) {
-  return ids.reduce((s, id) => s + votes[id], 0) / ids.length;
-}
+  /* ── PROGRESS ────────────────────────────────────── */
+  function updateProgress() {
+    var n = Object.keys(votes).length;
+    pbar.style.width = (n / 9 * 100) + '%';
+    plabel.textContent = n + ' / 9';
 
-function interpret(val, isIB) {
-  const color = isIB ? '#1a6b8a' : '#c27a00';
-  const label = isIB ? 'Beneficienza Imparziale' : 'Danno Strumentale';
-  let head, body;
-  if (isIB) {
-    if (val >= 5.5)      { head = 'Alta Beneficienza Imparziale'; body = 'Tendi a estendere le obbligazioni morali oltre la cerchia dei propri cari, valorizzando l\'imparzialità nel giudizio etico.'; }
-    else if (val >= 3.5) { head = 'Beneficienza Imparziale moderata'; body = 'Riconosci il valore dell\'imparzialità morale, ma bilanci con considerazioni di prossimità e relazione.'; }
-    else                 { head = 'Bassa Beneficienza Imparziale'; body = 'Le obbligazioni verso chi ci è vicino hanno un peso morale rilevante nel tuo ragionamento etico.'; }
-  } else {
-    if (val >= 5.5)      { head = 'Alto Danno Strumentale'; body = 'Sei più disposto ad accettare che causare danno a qualcuno possa essere giustificato se massimizza il benessere collettivo.'; }
-    else if (val >= 3.5) { head = 'Danno Strumentale moderato'; body = 'Accetti in casi estremi che il danno a uno possa essere giustificato, ma con riserve significative.'; }
-    else                 { head = 'Basso Danno Strumentale'; body = 'Tendi a rifiutare l\'uso strumentale di persone innocenti anche a fronte di benefici collettivi.'; }
+    if (n === 9) {
+      shint.textContent = 'Tutto pronto!';
+      btnCalc.classList.add('ready');
+    } else {
+      shint.textContent = 'Rispondi a tutti gli item (' + n + '/9)';
+      btnCalc.classList.remove('ready');
+    }
   }
-  return `<div class="int-item"><div class="int-head" style="color:${color}">${head}</div><div class="int-body">${body}</div></div>`;
-}
 
-function showResults() {
-  const ib = mean([1,3,5,7,9]);
-  const ih = mean([2,4,6,8]);
-  document.getElementById('ib-val').textContent = ib.toFixed(2);
-  document.getElementById('ih-val').textContent = ih.toFixed(2);
-  setTimeout(() => {
-    document.getElementById('ib-gauge').style.width = ((ib-1)/6*100) + '%';
-    document.getElementById('ih-gauge').style.width = ((ih-1)/6*100) + '%';
-  }, 50);
-  document.getElementById('interpret-body').innerHTML = interpret(ib, true) + interpret(ih, false);
-  document.getElementById('form-view').style.display = 'none';
-  document.getElementById('results').style.display = 'block';
-  window.scrollTo(0,0);
-}
+  /* ── CALC RESULTS ────────────────────────────────── */
+  function mean(ids) {
+    var sum = 0;
+    for (var i = 0; i < ids.length; i++) sum += votes[ids[i]];
+    return sum / ids.length;
+  }
 
-function restart() {
-  Object.keys(votes).forEach(k => delete votes[k]);
+  function interpText(val, isSub_ib) {
+    var head, body, color;
+    if (isSub_ib) {
+      color = 'var(--ib)';
+      if (val >= 5.5)      { head = 'Alta Beneficienza Imparziale';    body = 'Attribuisci grande peso all\'obbligo morale di massimizzare il benessere collettivo, anche a costo di sacrifici personali significativi.'; }
+      else if (val >= 3.5) { head = 'Beneficienza Imparziale moderata'; body = 'Riconosci un certo obbligo verso il benessere altrui, bilanciandolo con considerazioni personali e parziali.'; }
+      else                 { head = 'Bassa Beneficienza Imparziale';   body = 'Tendi a non considerare obbligatorio il sacrificio personale per massimizzare il benessere complessivo.'; }
+    } else {
+      color = 'var(--ih)';
+      if (val >= 5.5)      { head = 'Alto Danno Strumentale';    body = 'Sei più disposto ad accettare che causare danno a qualcuno possa essere giustificato se massimizza il benessere collettivo.'; }
+      else if (val >= 3.5) { head = 'Danno Strumentale moderato'; body = 'Accetti in casi estremi che il danno a uno possa essere giustificato, ma con riserve significative.'; }
+      else                 { head = 'Basso Danno Strumentale';   body = 'Tendi a rifiutare l\'uso strumentale di persone innocenti anche a fronte di benefici collettivi.'; }
+    }
+    return '<div class="int-block"><div class="int-head" style="color:' + color + '">' + head + '</div><div class="int-body">' + body + '</div></div>';
+  }
+
+  function calcResults() {
+    var ib = mean([1,3,5,7,9]);
+    var ih = mean([2,4,6,8]);
+
+    document.getElementById('r-ib').textContent = ib.toFixed(2);
+    document.getElementById('r-ih').textContent = ih.toFixed(2);
+
+    setTimeout(function () {
+      document.getElementById('g-ib').style.width = ((ib - 1) / 6 * 100) + '%';
+      document.getElementById('g-ih').style.width = ((ih - 1) / 6 * 100) + '%';
+    }, 60);
+
+    document.getElementById('interp').innerHTML = interpText(ib, true) + interpText(ih, false);
+  }
+
+  /* ── INIT ────────────────────────────────────────── */
   buildItems();
-  document.getElementById('prog-fill').style.width = '0%';
-  document.getElementById('prog-label').textContent = '0 / 9';
-  document.getElementById('btn-submit').disabled = true;
-  document.getElementById('btn-hint').textContent = 'Rispondi a tutti gli item (0/9)';
-  document.getElementById('results').style.display = 'none';
-  document.getElementById('test-view').style.display = 'none';
-  document.getElementById('intro-view').style.display = 'block';
-  window.scrollTo(0,0);
-}
+  updateProgress();
 
-buildItems();
+})();
 </script>
 </body>
 </html>
