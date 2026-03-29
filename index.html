@@ -40,6 +40,23 @@
   .btn-submit:disabled { background: #ccc; box-shadow: none; cursor: not-allowed; }
   .btn-hint { font-size: 11px; color: #aaa; margin-bottom: 12px; }
 
+  /* Intro */
+  .intro { background: #fff; border-radius: 12px; padding: 20px 20px 16px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.06); border: 1px solid #ececec; }
+  .intro h2 { font-size: 13px; font-weight: 700; color: #1a1a2e; margin-bottom: 8px; }
+  .intro p  { font-size: 12px; color: #444; line-height: 1.65; margin-bottom: 8px; }
+  .intro p:last-child { margin-bottom: 0; }
+  .subscale-row { display: flex; gap: 8px; margin: 10px 0; }
+  .subscale-pill { flex: 1; border-radius: 8px; padding: 8px 10px; font-size: 11px; line-height: 1.5; }
+  .subscale-pill strong { display: block; font-size: 11.5px; margin-bottom: 2px; }
+  .pill-ib { background: #e8f4f8; color: #1a6b8a; border: 1px solid rgba(26,107,138,.2); }
+  .pill-ih { background: #fef3e2; color: #c27a00; border: 1px solid rgba(194,122,0,.2); }
+  .refs { margin-top: 12px; padding-top: 10px; border-top: 1px solid #f0f0f0; }
+  .refs p { font-size: 10px; color: #888; line-height: 1.55; margin-bottom: 4px; font-style: italic; }
+  .refs p:last-child { margin-bottom: 0; }
+  .btn-start { display: block; width: 100%; padding: 13px; border-radius: 10px; border: none; background: #1a1a2e; color: #fff; font-weight: 700; font-size: 15px; cursor: pointer; box-shadow: 0 2px 10px rgba(26,26,46,.25); font-family: inherit; margin-top: 16px; transition: opacity .2s; }
+  .btn-start:hover { opacity: .88; }
+  #test-view { display: none; }
+
   /* Results */
   #results { display: none; }
   .scores-row { display: flex; gap: 12px; margin-bottom: 4px; }
@@ -67,7 +84,63 @@
 <body>
 <div class="wrap">
 
+  <!-- INTRO -->
+  <div id="intro-view">
+    <div class="header">
+      <h1>Oxford Utilitarianism Scale</h1>
+      <p>Strumento di autovalutazione &middot; Anonimo &middot; ~3 minuti</p>
+    </div>
+    <div class="intro">
+      <h2>Che cos'è l'Oxford Utilitarianism Scale?</h2>
+      <p>
+        L'Oxford Utilitarianism Scale (OUS) è uno strumento psicometrico sviluppato da Kahane e colleghi
+        per misurare le tendenze utilitaristiche nel ragionamento morale. A differenza degli approcci
+        precedenti — che riducevano l'utilitarismo al solo schema sacrificale del trolley problem —
+        l'OUS propone un modello bidimensionale, identificando due componenti distinte e
+        tendenzialmente indipendenti:
+      </p>
+      <div class="subscale-row">
+        <div class="subscale-pill pill-ib">
+          <strong>Beneficienza Imparziale (IB)</strong>
+          Item 1, 3, 5, 7, 9<br>
+          Propensione a promuovere il benessere collettivo in modo imparziale, senza privilegiare chi ci è vicino.
+        </div>
+        <div class="subscale-pill pill-ih">
+          <strong>Danno Strumentale (IH)</strong>
+          Item 2, 4, 6, 8<br>
+          Disponibilità a causare danno a individui innocenti come mezzo per massimizzare il benessere aggregato.
+        </div>
+      </div>
+      <p>
+        Le due sottoscale non misurano un unico costrutto: un punteggio elevato su IB non implica
+        necessariamente un punteggio elevato su IH. Questa dissociazione ha rilevanza sia teorica —
+        nel dibattito filosofico sull'utilitarismo — sia pratica, ad esempio nello studio del
+        ragionamento morale in contesti clinici e bioetici.
+      </p>
+      <p>
+        La scala è composta da 9 item con risposta su scala Likert a 7 punti
+        (1 = Fortemente in disaccordo, 7 = Fortemente d'accordo).
+        Al termine riceverai il tuo punteggio personale per ciascuna sottoscala. Nessun dato viene
+        trasmesso o registrato.
+      </p>
+      <div class="refs">
+        <p>
+          1. Kahane G, Everett JA, Earp BD, Caviola L, Faber NS, Crockett MJ, Savulescu J.
+          Beyond sacrificial harm: A two-dimensional model of utilitarian psychology.
+          <em>Psychological Review</em>. 2018;125(2):131–164.
+        </p>
+        <p>
+          2. Kahane G, Everett JA, Earp BD, Caviola L, Faber NS, Crockett MJ, Savulescu J.
+          Beyond sacrificial harm: A two-dimensional model of utilitarian psychology [Correction].
+          <em>Psychological Review</em>. 2019;126(6):979.
+        </p>
+      </div>
+      <button class="btn-start" onclick="startTest()">Inizia il questionario →</button>
+    </div>
+  </div>
+
   <!-- FORM -->
+  <div id="test-view">
   <div id="form-view">
     <div class="header">
       <h1>Oxford Utilitarianism Scale</h1>
@@ -86,6 +159,7 @@
       <button class="btn-submit" id="btn-submit" disabled onclick="showResults()">Calcola il mio punteggio →</button>
     </div>
   </div>
+  </div><!-- /test-view -->
 
   <!-- RESULTS -->
   <div id="results">
@@ -143,7 +217,13 @@ const ITEMS = [
 
 const votes = {};
 
-function buildItems() {
+function startTest() {
+  document.getElementById('intro-view').style.display = 'none';
+  document.getElementById('test-view').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+
   const c = document.getElementById('items-container');
   c.innerHTML = '';
   ITEMS.forEach(item => {
@@ -236,7 +316,8 @@ function restart() {
   document.getElementById('btn-submit').disabled = true;
   document.getElementById('btn-hint').textContent = 'Rispondi a tutti gli item (0/9)';
   document.getElementById('results').style.display = 'none';
-  document.getElementById('form-view').style.display = 'block';
+  document.getElementById('test-view').style.display = 'none';
+  document.getElementById('intro-view').style.display = 'block';
   window.scrollTo(0,0);
 }
 
